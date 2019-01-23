@@ -13,7 +13,6 @@ import SwiftyJSON
 class CountryViewController: UIViewController {
 
     var countryTableView: UITableView!
-
     var countryInfo: CountryInfo = CountryInfo()
     let countryViewModel = CountryViewModel(PlaceAPIService())
     var refreshButton: UIBarButtonItem!
@@ -22,7 +21,7 @@ class CountryViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
-        self.navigationItem.title = "Country Info"
+        self.navigationItem.title = Constant.appTitle
         self.setRightBarbButton()
         self.setUpTableView()
         self.fetchCountryPlaceInfo()
@@ -63,12 +62,9 @@ class CountryViewController: UIViewController {
     func toggleRightBarButton(isAPICallFinish: Bool) {
         
         self.navigationItem.rightBarButtonItem = nil
-        if isAPICallFinish
-        {
+        if isAPICallFinish {
             self.navigationItem.rightBarButtonItem = refreshButton
-        }
-        else
-        {
+        } else {
             self.navigationItem.rightBarButtonItem = activityIndicatorItem
         }
     }
@@ -89,16 +85,14 @@ class CountryViewController: UIViewController {
                         self.countryInfo = countryInfo ?? CountryInfo.init()
                         self.countryTableView.reloadData()
                         self.navigationItem.title = self.countryInfo.title
-                    }
-                    else {
-                        print("Oh error occurred !")
+                    } else {
+                        self.showAlert(msg: Constant.errorMessage, completion: nil)
                     }
                     self.toggleRightBarButton(isAPICallFinish: true)
                 }
             }
-        }
-        else {
-            self.showAlert(msg: "No internet connection", completion: nil)
+        } else {
+            self.showAlert(msg: Constant.noInternetMessage, completion: nil)
             self.toggleRightBarButton(isAPICallFinish: true)
         }
     }

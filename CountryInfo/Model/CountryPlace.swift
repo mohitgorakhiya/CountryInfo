@@ -17,9 +17,9 @@ class CountryPlace: NSObject {
 
     init(placeDict: Dictionary<String, Any>) {
         
-        self.placeTitle = placeDict["title"] as? String ?? ""
-        self.placeDetails = placeDict["description"] as? String ?? ""
-        self.placeImageStr = placeDict["imageHref"] as? String ?? ""
+        self.placeTitle = placeDict[Constant.titleKey] as? String ?? ""
+        self.placeDetails = placeDict[Constant.detailKey] as? String ?? ""
+        self.placeImageStr = placeDict[Constant.imageKey] as? String ?? ""
     }
     
 }

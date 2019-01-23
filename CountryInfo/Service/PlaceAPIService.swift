@@ -21,20 +21,19 @@ class PlaceAPIService {
                     
                     let str = String(decoding: response.data!, as: UTF8.self)
                     let countryInfo = CountryInfo.init()
-                    if let data = str.data(using: .utf8)
-                    {
+                    if let data = str.data(using: .utf8) {
                         do {
                             let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
                             print(jsonResponse as! NSDictionary)
                             
                             let dict = jsonResponse as! Dictionary<String, Any>
                             
-                            if dict["title"] != nil {
-                                countryInfo.title = dict["title"] as? String ?? ""
+                            if dict[Constant.titleKey] != nil {
+                                countryInfo.title = dict[Constant.titleKey] as? String ?? ""
                             }
                             
-                            if dict["rows"] != nil {
-                                let placesArray = dict["rows"] as! Array<Any>
+                            if dict[Constant.rowsKey] != nil {
+                                let placesArray = dict[Constant.rowsKey] as! Array<Any>
                                 for i in 0..<placesArray.count {
                                     let placeInfoDict = placesArray[i] as! Dictionary<String, Any>
                                     let placeInfo = CountryPlace.init(placeDict: placeInfoDict)
@@ -48,8 +47,7 @@ class PlaceAPIService {
                         }
                         
                     }
-                }
-                else {
+                } else {
                     completionHandler(false, nil, nil)
                 }
         }
