@@ -21,6 +21,8 @@
 		A5E54C5C67557C36B0D17EC4 /* Pods_CountryInfo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 649DE13E938FE7AC1471C2E7 /* Pods_CountryInfo.framework */; };
 		B9624E0C24C4D18048E0CD6A /* Pods_CountryInfoTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5235995FDB6BED0040DE7969 /* Pods_CountryInfoTests.framework */; };
 		F8EE20FF21EF34E3009A0984 /* PlaceCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8EE20FE21EF34E3009A0984 /* PlaceCell.swift */; };
+		F8F54F5521F8A10800D9E2E4 /* CountryDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F54F5421F8A10800D9E2E4 /* CountryDataSource.swift */; };
+		F8F54F5721F8A56C00D9E2E4 /* DynamicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = F8F54F5621F8A56C00D9E2E4 /* DynamicValue.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +59,8 @@
 		9991861C2D0218D4247ADFBE /* Pods-CountryInfoTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryInfoTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-CountryInfoTests/Pods-CountryInfoTests.release.xcconfig"; sourceTree = "<group>"; };
 		AD5AFA16828CAEE6F10020FB /* Pods-CountryInfo.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CountryInfo.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CountryInfo/Pods-CountryInfo.debug.xcconfig"; sourceTree = "<group>"; };
 		F8EE20FE21EF34E3009A0984 /* PlaceCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCell.swift; sourceTree = "<group>"; };
+		F8F54F5421F8A10800D9E2E4 /* CountryDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryDataSource.swift; sourceTree = "<group>"; };
+		F8F54F5621F8A56C00D9E2E4 /* DynamicValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicValue.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -139,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				3B626D4B21EE38EE001F1D0D /* CountryViewModel.swift */,
+				F8F54F5421F8A10800D9E2E4 /* CountryDataSource.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -157,6 +162,7 @@
 			children = (
 				3B626D3921EE0810001F1D0D /* CountryPlace.swift */,
 				3B626D3B21EE0855001F1D0D /* CountryInfo.swift */,
+				F8F54F5621F8A56C00D9E2E4 /* DynamicValue.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -358,10 +364,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				3B626D4721EE2E14001F1D0D /* PlaceAPIService.swift in Sources */,
+				F8F54F5721F8A56C00D9E2E4 /* DynamicValue.swift in Sources */,
 				3B626D3C21EE0855001F1D0D /* CountryInfo.swift in Sources */,
 				3B626D1921EDF987001F1D0D /* CountryViewController.swift in Sources */,
 				3B626D4421EE270B001F1D0D /* Constant.swift in Sources */,
 				3B626D1721EDF987001F1D0D /* AppDelegate.swift in Sources */,
+				F8F54F5521F8A10800D9E2E4 /* CountryDataSource.swift in Sources */,
 				3B626D4C21EE38EE001F1D0D /* CountryViewModel.swift in Sources */,
 				3B626D3A21EE0810001F1D0D /* CountryPlace.swift in Sources */,
 				3B626D4F21EE398A001F1D0D /* Extension.swift in Sources */,
@@ -524,7 +532,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CountryInfo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Mohit.CountryInfo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CountryInfo/CountryInfo-Bridging-Header.h";
@@ -543,7 +554,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CountryInfo/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Mohit.CountryInfo;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "CountryInfo/CountryInfo-Bridging-Header.h";
@@ -560,7 +574,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CountryInfoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Mohit.CountryInfoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;
@@ -577,7 +595,11 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				INFOPLIST_FILE = CountryInfoTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
 				PRODUCT_BUNDLE_IDENTIFIER = Mohit.CountryInfoTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.2;

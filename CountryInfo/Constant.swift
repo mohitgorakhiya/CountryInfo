@@ -8,7 +8,7 @@
 
 import Foundation
 
-typealias CompletionHandler = (_ success:Bool, _ countryInfo: CountryInfo?, _ error: Error?) -> Void
+typealias CompletionHandlerAPI = (_ success:Bool, _ countryInfo: CountryInfo?, _ error: Error?) -> Void
 
 struct Constant {
     

@@ -13,8 +13,8 @@ import SwiftyJSON
 class CountryViewController: UIViewController {
 
     var countryTableView: UITableView!
+    let countrySource = CountryDataSource()
     var countryInfo: CountryInfo = CountryInfo()
-    let countryViewModel = CountryViewModel(PlaceAPIService())
     var refreshButton: UIBarButtonItem!
     var activityIndicatorItem: UIBarButtonItem!
     
@@ -26,7 +26,10 @@ class CountryViewController: UIViewController {
         self.setUpTableView()
         self.fetchCountryPlaceInfo()
     }
-    
+    lazy var countryViewModel : CountryViewModel = {
+        let countryViewModel = CountryViewModel.init(PlaceAPIService(), dataSource: countrySource)
+        return countryViewModel
+    }()
     // Set Right bar button for Refresh the list
     func setRightBarbButton() {
         
@@ -51,8 +54,10 @@ class CountryViewController: UIViewController {
         countryTableView.bottomAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.bottomAnchor).isActive = true
         countryTableView.leftAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.leftAnchor).isActive = true
         countryTableView.rightAnchor.constraint(equalTo: self.view.safeAreaLayoutGuide.rightAnchor).isActive = true
-        self.countryTableView.delegate = self
-        self.countryTableView.dataSource = self
+        self.countryTableView.dataSource = self.countrySource
+        self.countrySource.data.addAndNotify(observer: self) { [weak self] in
+            self?.countryTableView.reloadData()
+        }
         self.countryTableView.tableFooterView = UIView(frame: .zero)
         self.countryTableView.estimatedRowHeight = 100
         self.countryTableView.rowHeight = UITableView.automaticDimension
@@ -82,8 +87,6 @@ class CountryViewController: UIViewController {
                 
                 DispatchQueue.main.async {
                     if success {
-                        self.countryInfo = countryInfo ?? CountryInfo.init()
-                        self.countryTableView.reloadData()
                         self.navigationItem.title = self.countryInfo.title
                     } else {
                         self.showAlert(msg: Constant.errorMessage, completion: nil)

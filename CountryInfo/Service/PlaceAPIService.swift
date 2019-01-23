@@ -13,7 +13,7 @@ import SwiftyJSON
 class PlaceAPIService {
     
     //Get Places List
-    func fetchPlaceInfo(completionHandler: @escaping CompletionHandler) {
+    func fetchPlaceInfo(completionHandler: @escaping CompletionHandlerAPI) {
         Alamofire.request(Constant.PLACEURL, method: .get, parameters: nil)
             .responseJSON { response in
                 
@@ -36,8 +36,12 @@ class PlaceAPIService {
                                 let placesArray = dict[Constant.rowsKey] as! Array<Any>
                                 for i in 0..<placesArray.count {
                                     let placeInfoDict = placesArray[i] as! Dictionary<String, Any>
+                                    
                                     let placeInfo = CountryPlace.init(placeDict: placeInfoDict)
-                                    countryInfo.placesArray.append(placeInfo)
+                                    
+                                    if placeInfo.placeTitle.count > 0 && placeInfo.placeTitle.count > 0 && placeInfo.placeTitle.count > 0 {
+                                        countryInfo.placesArray.append(placeInfo)
+                                    }
                                 }
                             }
                             completionHandler(true, countryInfo, nil)
@@ -45,7 +49,6 @@ class PlaceAPIService {
                         catch let error {
                             completionHandler(false, countryInfo, error)
                         }
-                        
                     }
                 } else {
                     completionHandler(false, nil, nil)
