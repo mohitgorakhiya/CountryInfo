@@ -14,7 +14,6 @@ class CountryInfoTests: XCTestCase {
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
-        print("setUp")
         self.testCountry()
     }
 
@@ -28,7 +27,6 @@ class CountryInfoTests: XCTestCase {
             XCTAssertNotNil(string, "Expected non-nil string")
             expObj.fulfill()
         }
-        
         waitForExpectations(timeout: 5.0, handler: nil)
     }
 //    func testExample() {
