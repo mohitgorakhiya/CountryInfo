@@ -11,42 +11,37 @@ import Alamofire
 import SwiftyJSON
 
 class PlaceAPIService {
-    
+
     //Get Places List
     func fetchPlaceInfo(completionHandler: @escaping CompletionHandlerAPI) {
         Alamofire.request(Constant.PLACEURL, method: .get, parameters: nil)
             .responseJSON { response in
-                
+
                 if response.data != nil {
-                    
                     let str = String(decoding: response.data!, as: UTF8.self)
                     let countryInfo = CountryInfo.init()
                     if let data = str.data(using: .utf8) {
                         do {
                             let jsonResponse = try JSONSerialization.jsonObject(with: data, options: [])
-                            print(jsonResponse as! NSDictionary)
-                            
-                            let dict = jsonResponse as! Dictionary<String, Any>
-                            
-                            if dict[Constant.titleKey] != nil {
-                                countryInfo.title = dict[Constant.titleKey] as? String ?? ""
+                            let dict = jsonResponse as? Dictionary<String, Any>
+                            if dict?[Constant.titleKey] != nil {
+                                countryInfo.title = dict?[Constant.titleKey] as? String ?? ""
                             }
-                            
-                            if dict[Constant.rowsKey] != nil {
-                                let placesArray = dict[Constant.rowsKey] as! Array<Any>
-                                for i in 0..<placesArray.count {
-                                    let placeInfoDict = placesArray[i] as! Dictionary<String, Any>
-                                    
-                                    let placeInfo = CountryPlace.init(placeDict: placeInfoDict)
-                                    
-                                    if placeInfo.placeTitle.count > 0 && placeInfo.placeTitle.count > 0 && placeInfo.placeTitle.count > 0 {
-                                        countryInfo.placesArray.append(placeInfo)
+                            if dict?[Constant.rowsKey] != nil {
+                                if let placesArray = dict?[Constant.rowsKey] as? Array<Any> {
+                                    for index in 0..<placesArray.count {
+                                        let placeInfoDict = placesArray[index] as? Dictionary<String, Any>
+                                        let placeInfo = CountryPlace.init(placeDict: placeInfoDict)
+                                        if placeInfo.placeTitle.count > 0 &&
+                                            placeInfo.placeTitle.count > 0 &&
+                                            placeInfo.placeTitle.count > 0 {
+                                            countryInfo.placesArray.append(placeInfo)
+                                        }
                                     }
                                 }
                             }
                             completionHandler(true, countryInfo, nil)
-                        }
-                        catch let error {
+                        } catch let error {
                             completionHandler(false, countryInfo, error)
                         }
                     }

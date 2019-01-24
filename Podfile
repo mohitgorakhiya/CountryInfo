@@ -10,6 +10,7 @@ target 'CountryInfo' do
   pod 'ReachabilitySwift'
   pod 'SwiftyJSON'
   pod 'SDWebImage/WebP'
+  pod 'SwiftLint'
 
   target 'CountryInfoTests' do
     inherit! :search_paths

@@ -14,11 +14,9 @@ class GenericDataSource<T> : NSObject {
 }
 
 class CountryDataSource: GenericDataSource<CountryInfo>, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
         return 1
     }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.data.value.count > 0 {
             let countryPlace = self.data.value[section]
@@ -26,20 +24,14 @@ class CountryDataSource: GenericDataSource<CountryInfo>, UITableViewDataSource {
         } else {
             return 0
         }
-        
     }
-    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
         var placeCell = tableView.dequeueReusableCell(withIdentifier: "PlaceCell") as? PlaceCell
-        
         if placeCell == nil {
             placeCell = PlaceCell.init(style: .default, reuseIdentifier: "PlaceCell")
         }
         let countryPlace = self.data.value[0].placesArray[indexPath.row]
-        placeCell?.SetUpCellData(placeInfo: countryPlace)
-        
+        placeCell?.setUpCellData(placeInfo: countryPlace)
         return placeCell!
-        
     }
 }

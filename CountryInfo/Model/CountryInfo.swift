@@ -9,6 +9,6 @@
 import UIKit
 
 class CountryInfo: NSObject {
-    var title : String!
+    var title: String!
     var placesArray = [CountryPlace]()
 }

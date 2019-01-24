@@ -11,15 +11,15 @@ import SwiftyJSON
 
 class CountryPlace: NSObject {
 
-    var placeTitle : String!
-    var placeDetails : String!
-    var placeImageStr : String!
+    var placeTitle: String!
+    var placeDetails: String!
+    var placeImageStr: String!
 
-    init(placeDict: Dictionary<String, Any>) {
-        
-        self.placeTitle = placeDict[Constant.titleKey] as? String ?? ""
-        self.placeDetails = placeDict[Constant.detailKey] as? String ?? ""
-        self.placeImageStr = placeDict[Constant.imageKey] as? String ?? ""
+    init(placeDict: Dictionary<String, Any>?) {
+
+        self.placeTitle = placeDict?[Constant.titleKey] as? String ?? ""
+        self.placeDetails = placeDict?[Constant.detailKey] as? String ?? ""
+        self.placeImageStr = placeDict?[Constant.imageKey] as? String ?? ""
     }
-    
+
 }

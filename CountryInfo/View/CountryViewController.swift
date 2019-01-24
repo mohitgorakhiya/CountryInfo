@@ -14,10 +14,14 @@ class CountryViewController: UIViewController {
 
     var countryTableView: UITableView!
     let countrySource = CountryDataSource()
-    var countryInfo: CountryInfo = CountryInfo()
     var refreshButton: UIBarButtonItem!
     var activityIndicatorItem: UIBarButtonItem!
-    
+
+    lazy var countryViewModel: CountryViewModel = {
+        let countryViewModel = CountryViewModel.init(PlaceAPIService(), dataSource: countrySource)
+        return countryViewModel
+    }()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.white
@@ -26,14 +30,13 @@ class CountryViewController: UIViewController {
         self.setUpTableView()
         self.fetchCountryPlaceInfo()
     }
-    lazy var countryViewModel : CountryViewModel = {
-        let countryViewModel = CountryViewModel.init(PlaceAPIService(), dataSource: countrySource)
-        return countryViewModel
-    }()
+
     // Set Right bar button for Refresh the list
     func setRightBarbButton() {
-        
-        refreshButton = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(refreshInfo))
+
+        refreshButton = UIBarButtonItem.init(barButtonSystemItem: .refresh,
+                                             target: self,
+                                             action: #selector(refreshInfo))
         let activityIndicator = UIActivityIndicatorView.init(style: .gray)
         activityIndicator.frame = CGRect.init(x: 0.0, y: 0.0, width: 20.0, height: 20.0)
         activityIndicator.hidesWhenStopped = false
@@ -42,10 +45,10 @@ class CountryViewController: UIViewController {
 
         self.navigationItem.rightBarButtonItem = refreshButton
     }
-    
+
     // Add Table view and set up constraint
     func setUpTableView() {
-        
+
         countryTableView = UITableView()
         countryTableView.backgroundColor = .white
         self.view.addSubview(countryTableView)
@@ -62,10 +65,10 @@ class CountryViewController: UIViewController {
         self.countryTableView.estimatedRowHeight = 100
         self.countryTableView.rowHeight = UITableView.automaticDimension
     }
-    
+
     // Toggle right bar button when API calling is in progress and finish
     func toggleRightBarButton(isAPICallFinish: Bool) {
-        
+
         self.navigationItem.rightBarButtonItem = nil
         if isAPICallFinish {
             self.navigationItem.rightBarButtonItem = refreshButton
@@ -73,21 +76,21 @@ class CountryViewController: UIViewController {
             self.navigationItem.rightBarButtonItem = activityIndicatorItem
         }
     }
-    
+
     @objc func refreshInfo() {
         self.fetchCountryPlaceInfo()
     }
-    
+
     func fetchCountryPlaceInfo() {
-        
-        if (Connectivity.isConnectedToInternet()) {
-            
+
+        if Connectivity.isConnectedToInternet() {
+
             self.toggleRightBarButton(isAPICallFinish: false)
-            countryViewModel.fetchPlaceInfo { (success, countryInfo, error) in
-                
+            countryViewModel.fetchPlaceInfo { (success, title, _) in
+
                 DispatchQueue.main.async {
                     if success {
-                        self.navigationItem.title = self.countryInfo.title
+                        self.navigationItem.title = title
                     } else {
                         self.showAlert(msg: Constant.errorMessage, completion: nil)
                     }
@@ -100,32 +103,3 @@ class CountryViewController: UIViewController {
         }
     }
 }
-extension CountryViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
-    }
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return self.countryInfo.placesArray.count
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
-        var placeCell = tableView.dequeueReusableCell(withIdentifier: "PlaceCell") as? PlaceCell
-        
-        if placeCell == nil {
-            placeCell = PlaceCell.init(style: .default, reuseIdentifier: "PlaceCell")
-        }
-        let countryPlace = self.countryInfo.placesArray[indexPath.row]
-        placeCell?.SetUpCellData(placeInfo: countryPlace)
-        
-        return placeCell!
-    }
-
-}
-

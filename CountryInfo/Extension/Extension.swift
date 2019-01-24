@@ -9,12 +9,11 @@
 import Foundation
 
 extension UIViewController {
-    
-    func showAlert(title:String = Constant.alertTitle ,msg:String, completion:(()->())?) {
-        
+
+    func showAlert(title: String = Constant.alertTitle, msg: String, completion:(() -> Void)?) {
+
         let controller = UIAlertController(title: title, message: msg, preferredStyle: .alert)
-        
-        let action = UIAlertAction(title: Constant.alertOk, style: .cancel) { (action) in
+        let action = UIAlertAction(title: Constant.alertOk, style: .cancel) { (_) in
             if completion != nil {
                 completion!()
             }
