@@ -82,9 +82,7 @@ class CountryViewController: UIViewController {
     }
 
     func fetchCountryPlaceInfo() {
-
         if Connectivity.isConnectedToInternet() {
-
             self.toggleRightBarButton(isAPICallFinish: false)
             countryViewModel.fetchPlaceInfo { (success, title, _) in
 
